@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./css/App.css";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Home from "./components/Home";
 function App() {
   const [token, setToken] = useState(null);
 
@@ -14,7 +15,9 @@ function App() {
           <Login setToken={setToken} />
         </div>
       ) : (
-        <div>hello</div>
+        <div>
+          <Home token={token} />
+        </div>
       )}
     </div>
   );
