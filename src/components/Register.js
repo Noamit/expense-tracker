@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { register } from "../api";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
-    // try {
-    //     const response = await register(username, password);
-    //     console.log(response.data);
-    // } catch (error) {
-    //     console.error(error);
-    // }
-    console.log("aaa");
+    try {
+      const response = await register(username, password);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

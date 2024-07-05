@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+import { login } from "../api";
 
 function Login({ setToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    // try {
-    //     const response = await login(username, password);
-    //     setToken(response.data.access_token);
-    // } catch (error) {
-    //     console.error(error);
-    // }
-    console.log("aaa");
+    try {
+      const response = await login(username, password);
+      setToken(response.data.access_token);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
