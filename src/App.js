@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -8,12 +9,13 @@ function App() {
 
   return (
     <div>
-      <h1>Expense Tracker</h1>
       {!token ? (
-        <div>
-          <Register />
-          <Login setToken={setToken} />
-        </div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login setToken={setToken} />}></Route>
+            <Route path="/register" element={<Register />}></Route>
+          </Routes>
+        </BrowserRouter>
       ) : (
         <div>
           <Home token={token} />
