@@ -3,15 +3,16 @@ import { login } from "../api";
 import { Link } from "react-router-dom";
 import "../css/login.css";
 
-function Login({ setToken }) {
+function Login({ setAccessToken, setRefreshToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
       const response = await login(username, password);
-      setToken(response.data.access_token);
       console.log(response.data);
+      setAccessToken(response.data.access_token);
+      setRefreshToken(response.data.refresh_token);
     } catch (error) {
       console.error(error);
     }
