@@ -13,6 +13,8 @@ function Login({ setAccessToken, setRefreshToken }) {
       console.log(response.data);
       setAccessToken(response.data.access_token);
       setRefreshToken(response.data.refresh_token);
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("refresh_token", response.data.refresh_token);
     } catch (error) {
       console.error(error);
     }

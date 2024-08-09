@@ -41,87 +41,89 @@ function Home({ accessToken, refreshToken }) {
   };
 
   return (
-    <div className="container">
-      <form id="expense-form">
-        <input
-          className="expense-input"
-          type="text"
-          id="expense-name"
-          placeholder="Expense Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <input
-          className="expense-input"
-          type="number"
-          id="expense-amount"
-          placeholder="Amount"
-          step="0.01"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          required
-        />
-        <input
-          className="expense-input"
-          type="date"
-          id="expense-date"
-          placeholder="Date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-        <button
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            handleHome();
-          }}
-        >
-          Add Expense
-        </button>
-      </form>
-      <div className="expense-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Expense Name</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="expense-list">
-            {expenses.map((expense, index) => (
-              <tr key={expense.id}>
-                <td>{expense.name}</td>
-                <td>{expense.amount}</td>
-                <td>{expense.date}</td>
-                <td>
-                  {/* <button>Edit</button> */}
-                  <button
-                    id="delete-expense"
-                    type="submit"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handle_delete(expense.id);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
+    <>
+      <div className="container">
+        <form id="expense-form">
+          <input
+            className="expense-input"
+            type="text"
+            id="expense-name"
+            placeholder="Expense Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            className="expense-input"
+            type="number"
+            id="expense-amount"
+            placeholder="Amount"
+            step="0.01"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            required
+          />
+          <input
+            className="expense-input"
+            type="date"
+            id="expense-date"
+            placeholder="Date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              handleHome();
+            }}
+          >
+            Add Expense
+          </button>
+        </form>
+        <div className="expense-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Expense Name</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="total-amount">
-          <strong>Total:</strong>$
-          <span id="total-amount">
-            {expenses.reduce((total, expense) => total + expense.amount, 0)}
-          </span>
+            </thead>
+            <tbody id="expense-list">
+              {expenses.map((expense, index) => (
+                <tr key={expense.id}>
+                  <td>{expense.name}</td>
+                  <td>{expense.amount}</td>
+                  <td>{expense.date}</td>
+                  <td>
+                    {/* <button>Edit</button> */}
+                    <button
+                      id="delete-expense"
+                      type="submit"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handle_delete(expense.id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="total-amount">
+            <strong>Total:</strong>$
+            <span id="total-amount">
+              {expenses.reduce((total, expense) => total + expense.amount, 0)}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
