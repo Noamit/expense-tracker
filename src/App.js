@@ -4,8 +4,10 @@ import "./css/App.css";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Home from "./components/Home";
-import NavBar from "./Navbar";
+import Categories from "./components/Categories";
+
 function App() {
+  // localStorage.clear();
   const storedAccessToken = localStorage.getItem("access_token");
   const storedRefreshToken = localStorage.getItem("refresh_token");
   const [accessToken, setAccessToken] = useState(storedAccessToken || "");
@@ -13,7 +15,6 @@ function App() {
 
   return (
     <>
-      <NavBar />
       {!accessToken ? (
         <BrowserRouter>
           <Routes>
@@ -36,6 +37,15 @@ function App() {
               path="/"
               element={
                 <Home accessToken={accessToken} refreshToken={refreshToken} />
+              }
+            ></Route>
+            <Route
+              path="/category"
+              element={
+                <Categories
+                  accessToken={accessToken}
+                  refreshToken={refreshToken}
+                />
               }
             ></Route>
           </Routes>

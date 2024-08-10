@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { get_expenses, home, insert_expense, delete_expenses } from "../api";
+import { get_expenses, insert_expense, delete_expenses } from "../api";
 import "../css/home.css";
+import NavBar from "../Navbar";
 
 function Home({ accessToken, refreshToken }) {
   const [name, setName] = useState(null);
@@ -42,6 +43,7 @@ function Home({ accessToken, refreshToken }) {
 
   return (
     <>
+      <NavBar />
       <div className="container">
         <form id="expense-form">
           <input

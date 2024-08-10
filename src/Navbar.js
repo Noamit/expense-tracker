@@ -10,6 +10,7 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav>
           <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/category">Categories</Nav.Link>
           {/* <Nav.Link href="/study">Study Area</Nav.Link>
           <Nav.Link href="/games">Games Area</Nav.Link> */}
         </Nav>
