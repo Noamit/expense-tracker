@@ -11,8 +11,13 @@ export async function login(username, password) {
   return await axios.post(BASE_URL + "/login", postRequest);
 }
 
-export async function insert_expense(token, name, amount, date) {
-  const postRequest = { name: name, amount: amount, date: date };
+export async function insert_expense(token, name, amount, date, category_id) {
+  const postRequest = {
+    name: name,
+    amount: amount,
+    date: date,
+    category_id: category_id,
+  };
   const response = await axios.post(BASE_URL + "/expense", postRequest, {
     headers: {
       Authorization: `Bearer ${token}`,

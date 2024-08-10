@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { get_expenses, insert_expense, delete_expenses } from "../api";
+import {
+  get_expenses,
+  insert_expense,
+  delete_expenses,
+  get_categories,
+} from "../api";
 import "../css/home.css";
 import NavBar from "../Navbar";
 
@@ -7,13 +12,19 @@ function Home({ accessToken, refreshToken }) {
   const [name, setName] = useState(null);
   const [amount, setAmount] = useState(null);
   const [date, setDate] = useState(null);
+  const [categoryId, setCategoryId] = useState("");
 
   const [expenses, setExpenses] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     try {
       get_expenses(accessToken).then((value) => {
         setExpenses(value);
+        console.log(value);
+      });
+      get_categories(accessToken).then((value) => {
+        setCategories(value);
       });
     } catch (error) {
       console.error(error);
@@ -23,7 +34,13 @@ function Home({ accessToken, refreshToken }) {
   const handleHome = async () => {
     try {
       //todo: check name, amount, date is not empty
-      const result = await insert_expense(accessToken, name, amount, date);
+      const result = await insert_expense(
+        accessToken,
+        name,
+        amount,
+        date,
+        categoryId
+      );
       setExpenses([...expenses, result]);
       console.log(result);
     } catch (error) {
@@ -74,6 +91,22 @@ function Home({ accessToken, refreshToken }) {
             onChange={(e) => setDate(e.target.value)}
             required
           />
+          <select
+            className="expense-input"
+            id="expense-category"
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)} // Update the selected category ID
+            required
+          >
+            <option value="" disabled>
+              Select Category
+            </option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
           <button
             type="submit"
             onClick={(e) => {
@@ -89,6 +122,7 @@ function Home({ accessToken, refreshToken }) {
             <thead>
               <tr>
                 <th>Expense Name</th>
+                <th>Category</th>
                 <th>Amount</th>
                 <th>Date</th>
                 <th>Action</th>
@@ -98,6 +132,7 @@ function Home({ accessToken, refreshToken }) {
               {expenses.map((expense, index) => (
                 <tr key={expense.id}>
                   <td>{expense.name}</td>
+                  <td>{expense.category.name}</td>
                   <td>{expense.amount}</td>
                   <td>{expense.date}</td>
                   <td>
@@ -120,7 +155,9 @@ function Home({ accessToken, refreshToken }) {
           <div className="total-amount">
             <strong>Total:</strong>$
             <span id="total-amount">
-              {expenses.reduce((total, expense) => total + expense.amount, 0)}
+              {expenses
+                .reduce((total, expense) => total + expense.amount, 0)
+                .toFixed(2)}
             </span>
           </div>
         </div>
