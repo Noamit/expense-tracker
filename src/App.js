@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import Register from "./components/Register";
+import Expense from "./components/Expense";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
@@ -48,6 +49,15 @@ function App() {
                 />
               }
             ></Route>
+            <Route
+              path="/expense/:id"
+              element={
+                <Expense
+                  accessToken={accessToken}
+                  refreshToken={refreshToken}
+                />
+              }
+            />
           </Routes>
         </BrowserRouter>
       )}

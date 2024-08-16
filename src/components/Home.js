@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   get_expenses,
   insert_expense,
@@ -10,6 +12,7 @@ import NavBar from "../Navbar";
 
 function Home({ accessToken, refreshToken }) {
   const [name, setName] = useState(null);
+  const [description, setDescription] = useState(null);
   const [amount, setAmount] = useState(null);
   const [date, setDate] = useState(null);
   const [categoryId, setCategoryId] = useState("");
@@ -17,11 +20,11 @@ function Home({ accessToken, refreshToken }) {
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
 
+  const navigate = useNavigate();
   useEffect(() => {
     try {
       get_expenses(accessToken).then((value) => {
         setExpenses(value);
-        console.log(value);
       });
       get_categories(accessToken).then((value) => {
         setCategories(value);
@@ -37,6 +40,7 @@ function Home({ accessToken, refreshToken }) {
       const result = await insert_expense(
         accessToken,
         name,
+        description,
         amount,
         date,
         categoryId
@@ -84,6 +88,15 @@ function Home({ accessToken, refreshToken }) {
           />
           <input
             className="expense-input"
+            type="text"
+            id="expense-description"
+            placeholder="Expense Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+          <input
+            className="expense-input"
             type="date"
             id="expense-date"
             placeholder="Date"
@@ -122,6 +135,7 @@ function Home({ accessToken, refreshToken }) {
             <thead>
               <tr>
                 <th>Expense Name</th>
+                <th>Description</th>
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Date</th>
@@ -132,11 +146,19 @@ function Home({ accessToken, refreshToken }) {
               {expenses.map((expense, index) => (
                 <tr key={expense.id}>
                   <td>{expense.name}</td>
+                  <td>{expense.description}</td>
                   <td>{expense.category.name}</td>
                   <td>{expense.amount}</td>
                   <td>{expense.date}</td>
                   <td>
                     {/* <button>Edit</button> */}
+                    <button
+                      id="show-expense"
+                      type="button"
+                      onClick={() => navigate(`/expense/${expense.id}`)}
+                    >
+                      Show
+                    </button>
                     <button
                       id="delete-expense"
                       type="submit"

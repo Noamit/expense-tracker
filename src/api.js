@@ -11,9 +11,17 @@ export async function login(username, password) {
   return await axios.post(BASE_URL + "/login", postRequest);
 }
 
-export async function insert_expense(token, name, amount, date, category_id) {
+export async function insert_expense(
+  token,
+  name,
+  description,
+  amount,
+  date,
+  category_id
+) {
   const postRequest = {
     name: name,
+    description: description,
     amount: amount,
     date: date,
     category_id: category_id,
@@ -23,6 +31,16 @@ export async function insert_expense(token, name, amount, date, category_id) {
       Authorization: `Bearer ${token}`,
     },
   });
+  return response.data;
+}
+
+export async function get_expense(token, id) {
+  const response = await axios.get(BASE_URL + "/expense/" + id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(response.data);
   return response.data;
 }
 
