@@ -153,11 +153,15 @@ function Home({ accessToken, refreshToken }) {
                   <td>
                     {/* <button>Edit</button> */}
                     <button
-                      id="show-expense"
+                      id="edit-expense"
                       type="button"
-                      onClick={() => navigate(`/expense/${expense.id}`)}
+                      onClick={() =>
+                        navigate(`/expense/${expense.id}`, {
+                          state: { categories },
+                        })
+                      }
                     >
-                      Show
+                      Edit
                     </button>
                     <button
                       id="delete-expense"

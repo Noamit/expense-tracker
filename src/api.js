@@ -40,7 +40,17 @@ export async function get_expense(token, id) {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(response.data);
+  return response.data;
+}
+
+export async function update_expense(token, id, expense) {
+  console.log(expense);
+  const response = await axios.put(BASE_URL + "/expense/" + id, expense, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   return response.data;
 }
 
