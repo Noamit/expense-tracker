@@ -10,12 +10,16 @@ import {
 import "../css/home.css";
 import NavBar from "../Navbar";
 
-function Home({ accessToken, refreshToken }) {
+function Home({ setAccessToken, setRefreshToken }) {
+  const accessToken = localStorage.getItem("access_token");
+  const refreshToken = localStorage.getItem("refresh_token");
+
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
   const [amount, setAmount] = useState(null);
   const [date, setDate] = useState(null);
   const [categoryId, setCategoryId] = useState("");
+  const [receipt, setReceipt] = useState(null); // New state variable for receipt image
 
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -23,10 +27,17 @@ function Home({ accessToken, refreshToken }) {
   const navigate = useNavigate();
   useEffect(() => {
     try {
-      get_expenses(accessToken).then((value) => {
-        setExpenses(value);
-      });
-      get_categories(accessToken).then((value) => {
+      get_expenses(accessToken, setAccessToken, setRefreshToken, navigate).then(
+        (value) => {
+          setExpenses(value);
+        }
+      );
+      get_categories(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate
+      ).then((value) => {
         setCategories(value);
       });
     } catch (error) {
@@ -34,17 +45,30 @@ function Home({ accessToken, refreshToken }) {
     }
   }, []);
 
+  const handleFileChange = (e) => {
+    setReceipt(e.target.files[0]);
+  };
+
   const handleHome = async () => {
     try {
-      //todo: check name, amount, date is not empty
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("amount", amount);
+      formData.append("date", date);
+      formData.append("category_id", categoryId);
+      if (receipt) {
+        formData.append("receipt", receipt); // Add the receipt file to the form data
+      }
+
       const result = await insert_expense(
         accessToken,
-        name,
-        description,
-        amount,
-        date,
-        categoryId
+        setAccessToken,
+        setRefreshToken,
+        navigate,
+        formData
       );
+
       setExpenses([...expenses, result]);
       console.log(result);
     } catch (error) {
@@ -54,7 +78,13 @@ function Home({ accessToken, refreshToken }) {
 
   const handle_delete = async (id) => {
     try {
-      await delete_expenses(accessToken, id);
+      await delete_expenses(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate,
+        id
+      );
       const updatedExpenses = expenses.filter((expense) => expense.id !== id);
       setExpenses(updatedExpenses);
     } catch (error) {
@@ -104,6 +134,13 @@ function Home({ accessToken, refreshToken }) {
             onChange={(e) => setDate(e.target.value)}
             required
           />
+          <input
+            className="expense-input"
+            type="file"
+            id="expense-receipt"
+            accept="image/*"
+            onChange={handleFileChange} // Handle file input change
+          />
           <select
             className="expense-input"
             id="expense-category"
@@ -147,7 +184,7 @@ function Home({ accessToken, refreshToken }) {
                 <tr key={expense.id}>
                   <td>{expense.name}</td>
                   <td>{expense.description}</td>
-                  <td>{expense.category.name}</td>
+                  <td>{expense.category ? expense.category.name : ""}</td>
                   <td>{expense.amount}</td>
                   <td>{expense.date}</td>
                   <td>

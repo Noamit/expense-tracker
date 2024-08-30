@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { get_expense, update_expense } from "../api";
 import NavBar from "../Navbar";
 
-function Expense({ accessToken, refreshToken }) {
+function Expense({ setAccessToken, setRefreshToken }) {
+  const accessToken = localStorage.getItem("access_token");
+  const refreshToken = localStorage.getItem("refresh_token");
+
   const { id } = useParams();
   const [expense, setExpense] = useState({});
   const [updatedExpense, setUpdatedExpense] = useState({});
   const location = useLocation();
+  const navigate = useNavigate();
+
   const { categories } = location.state || {}; // Extract categories from the state
 
-  console.log(categories);
   useEffect(() => {
     try {
-      get_expense(accessToken, id).then((value) => {
+      get_expense(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate,
+        id
+      ).then((value) => {
         setExpense(value);
       });
     } catch (error) {
@@ -36,7 +46,14 @@ function Expense({ accessToken, refreshToken }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await update_expense(accessToken, id, updatedExpense);
+      await update_expense(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate,
+        id,
+        updatedExpense
+      );
     } catch (error) {
       console.error(error);
     }
@@ -48,7 +65,6 @@ function Expense({ accessToken, refreshToken }) {
 
   return (
     <>
-      {console.log(expense)}
       <NavBar />
       <div className="container">
         <h1>Edit Expense</h1>

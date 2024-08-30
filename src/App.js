@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import Register from "./components/Register";
 import Expense from "./components/Expense";
+import Category from "./components/Category";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
@@ -28,7 +29,7 @@ function App() {
                 />
               }
             ></Route>
-            <Route path="/register" element={<Register />}></Route>
+            <Route path="/register" element={<Register />} />
           </Routes>
         </BrowserRouter>
       ) : (
@@ -37,24 +38,36 @@ function App() {
             <Route
               path="/"
               element={
-                <Home accessToken={accessToken} refreshToken={refreshToken} />
+                <Home
+                  setAccessToken={setAccessToken}
+                  setRefreshToken={setRefreshToken}
+                />
               }
-            ></Route>
+            />
             <Route
               path="/category"
               element={
                 <Categories
-                  accessToken={accessToken}
-                  refreshToken={refreshToken}
+                  setAccessToken={setAccessToken}
+                  setRefreshToken={setRefreshToken}
                 />
               }
-            ></Route>
+            />
             <Route
               path="/expense/:id"
               element={
                 <Expense
-                  accessToken={accessToken}
-                  refreshToken={refreshToken}
+                  setAccessToken={setAccessToken}
+                  setRefreshToken={setRefreshToken}
+                />
+              }
+            />
+            <Route
+              path="/category/:id"
+              element={
+                <Category
+                  setAccessToken={setAccessToken}
+                  setRefreshToken={setRefreshToken}
                 />
               }
             />

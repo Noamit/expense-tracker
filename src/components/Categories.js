@@ -2,14 +2,26 @@ import React, { useState, useEffect } from "react";
 import { get_categories, insert_category, delete_category } from "../api";
 import NavBar from "../Navbar";
 import "../css/Categories.css";
-function Categories({ accessToken, refreshToken }) {
+import { useNavigate } from "react-router-dom";
+
+function Categories({ setAccessToken, setRefreshToken }) {
+  const accessToken = localStorage.getItem("access_token");
+  const refreshToken = localStorage.getItem("refresh_token");
+
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
   const [categories, setCategories] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     try {
-      get_categories(accessToken).then((value) => {
+      get_categories(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate
+      ).then((value) => {
         setCategories(value);
       });
     } catch (error) {
@@ -20,7 +32,14 @@ function Categories({ accessToken, refreshToken }) {
   const handleHome = async () => {
     try {
       //todo: check name, amount, date is not empty
-      const result = await insert_category(accessToken, name, description);
+      const result = await insert_category(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate,
+        name,
+        description
+      );
       setCategories([...categories, result]);
       console.log(result);
     } catch (error) {
@@ -30,7 +49,13 @@ function Categories({ accessToken, refreshToken }) {
 
   const handle_delete = async (id) => {
     try {
-      await delete_category(accessToken, id);
+      await delete_category(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate,
+        id
+      );
       const updatedCategories = categories.filter(
         (category) => category.id !== id
       );
@@ -88,7 +113,13 @@ function Categories({ accessToken, refreshToken }) {
                   <td>{category.name}</td>
                   <td>{category.description}</td>
                   <td>
-                    {/* <button>Edit</button> */}
+                    <button
+                      id="edit-category"
+                      type="button"
+                      onClick={() => navigate(`/category/${category.id}`)}
+                    >
+                      Edit
+                    </button>
                     <button
                       id="delete-category"
                       type="submit"
