@@ -57,12 +57,13 @@ export async function update_expense(
   setRefreshToken,
   navigate,
   id,
-  expense
+  formData
 ) {
   try {
-    const response = await axios.put(BASE_URL + "/expense/" + id, expense, {
+    const response = await axios.put(BASE_URL + "/expense/" + id, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data", // Ensure the content type is set for file upload
       },
     });
 

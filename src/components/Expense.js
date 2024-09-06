@@ -24,6 +24,7 @@ function Expense({ setAccessToken, setRefreshToken }) {
         navigate,
         id
       ).then((value) => {
+        console.log(value);
         setExpense(value);
       });
     } catch (error) {
@@ -43,16 +44,32 @@ function Expense({ setAccessToken, setRefreshToken }) {
     setUpdatedExpense({ ...updatedExpense, category_id: categoryId });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Get the selected file
+
+    const fileURL = URL.createObjectURL(file);
+    setExpense((prevExpense) => ({
+      ...prevExpense,
+      receipt_url: fileURL, // Temporary URL for preview
+    }));
+    setUpdatedExpense({ ...updatedExpense, receipt: file });
+    // setReceipt(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      Object.keys(updatedExpense).forEach((key) => {
+        formData.append(key, updatedExpense[key]);
+      });
       await update_expense(
         accessToken,
         setAccessToken,
         setRefreshToken,
         navigate,
         id,
-        updatedExpense
+        formData
       );
     } catch (error) {
       console.error(error);
@@ -119,6 +136,25 @@ function Expense({ setAccessToken, setRefreshToken }) {
               onChange={handleInputChange}
               required
             />
+          </div>
+          <div>
+            {expense.receipt_url && (
+              <div>
+                <img src={expense.receipt_url} alt="Uploaded File" />
+              </div>
+            )}
+            <div>
+              <label htmlFor="receipt">
+                <strong>Upload Receipt:</strong>
+              </label>
+              <input
+                type="file"
+                id="receipt"
+                name="receipt"
+                accept="image/*" // Optional: Limit to image file types
+                onChange={handleFileChange} // Function to handle file selection
+              />
+            </div>
           </div>
           <div>
             <label htmlFor="category">
