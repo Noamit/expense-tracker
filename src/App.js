@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import Register from "./components/Register";
 import Expense from "./components/Expense";
+import InsertExpense from "./components/InsertExpense";
 import Category from "./components/Category";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -48,6 +49,15 @@ function App() {
               path="/category"
               element={
                 <Categories
+                  setAccessToken={setAccessToken}
+                  setRefreshToken={setRefreshToken}
+                />
+              }
+            />
+            <Route
+              path="/expense"
+              element={
+                <InsertExpense
                   setAccessToken={setAccessToken}
                   setRefreshToken={setRefreshToken}
                 />

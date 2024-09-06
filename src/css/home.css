@@ -46,6 +46,10 @@ button {
 	background-color: #6d707a; 
 }
 
+#create-expense {
+	background-color: #05090a; 
+}
+
 
 button:hover { 
 	background-color: #45a049; 
