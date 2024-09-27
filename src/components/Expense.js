@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { get_expense, update_expense } from "../api";
@@ -45,15 +46,15 @@ function Expense({ setAccessToken, setRefreshToken }) {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Get the selected file
-
-    const fileURL = URL.createObjectURL(file);
-    setExpense((prevExpense) => ({
-      ...prevExpense,
-      receipt_url: fileURL, // Temporary URL for preview
-    }));
-    setUpdatedExpense({ ...updatedExpense, receipt: file });
-    // setReceipt(e.target.files[0]);
+    try {
+      const file = e.target.files[0];
+      const fileURL = URL.createObjectURL(file);
+      setExpense((prevExpense) => ({
+        ...prevExpense,
+        receipt_url: fileURL, // Temporary URL for preview
+      }));
+      setUpdatedExpense({ ...updatedExpense, receipt: file });
+    } catch (error) {}
   };
 
   const handleSubmit = async (e) => {
