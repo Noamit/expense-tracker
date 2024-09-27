@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { get_expense, update_expense } from "../api";
