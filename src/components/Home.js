@@ -66,7 +66,7 @@ function Home({ setAccessToken, setRefreshToken }) {
     ).then((value) => {
       setExpensesMonthlyTotals(value);
     });
-  }, [months]);
+  }, [months, expenses]);
 
   const handle_delete = async (id) => {
     try {
