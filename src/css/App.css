@@ -42,8 +42,8 @@ body {
   background: #6a11cb;
 
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to right, rgb(129, 114, 145), rgb(231, 211, 240));
+  background: -webkit-linear-gradient(to right, rgb(151, 149, 152), rgb(251, 247, 252));
 
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right, rgba(129, 114, 145, 1), rgba(231, 211, 240, 1))
+  background: linear-gradient(to right, rgba(151, 149, 152, 1), rgba(251, 247, 252, 1))
 }

@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Button,
+  TextField,
+  MenuItem,
+  Container,
+  Box,
+  Typography,
+} from "@mui/material";
 
-import { insert_expense, get_categories } from "../api";
-import "../css/home.css";
+import { insert_expense } from "../api";
 import NavBar from "../Navbar";
 
 function InsertExpense({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
 
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [amount, setAmount] = useState(null);
-  const [date, setDate] = useState(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [receipt, setReceipt] = useState(null); // New state variable for receipt image
 
@@ -54,79 +61,104 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
   return (
     <>
       <NavBar />
-      <div className="container">
-        <form id="expense-form">
-          <input
-            className="expense-input"
-            type="text"
-            id="expense-name"
-            placeholder="Expense Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            className="expense-input"
-            type="number"
-            id="expense-amount"
-            placeholder="Amount"
-            step="0.01"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-          <input
-            className="expense-input"
-            type="text"
-            id="expense-description"
-            placeholder="Expense Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-          <input
-            className="expense-input"
-            type="date"
-            id="expense-date"
-            placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-          <input
-            className="expense-input"
-            type="file"
-            id="expense-receipt"
-            accept="image/*"
-            onChange={handleFileChange} // Handle file input change
-          />
-          <select
-            className="expense-input"
-            id="expense-category"
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)} // Update the selected category ID
-            required
-          >
-            <option value="" disabled>
-              Select Category
-            </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-          <button
-            type="submit"
-            onClick={(e) => {
+      <Container maxWidth="sm">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Add New Expense
+          </Typography>
+          <form
+            onSubmit={(e) => {
               e.preventDefault();
               handleInsert();
             }}
+            style={{ width: "100%", marginTop: "20px" }}
           >
-            Add
-          </button>
-        </form>
-      </div>
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-name"
+              label="Expense Name"
+              variant="outlined"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-amount"
+              label="Amount"
+              variant="outlined"
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              required
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-description"
+              label="Expense Description"
+              variant="outlined"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-date"
+              label="Date"
+              variant="outlined"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+            <TextField
+              fullWidth
+              select
+              margin="normal"
+              label="Select Category"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              required
+            >
+              {categories &&
+                categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+            </TextField>
+            <Button variant="contained" component="label">
+              Upload Receipt
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ marginTop: "20px" }}
+            >
+              Add Expense
+            </Button>
+          </form>
+        </Box>
+      </Container>
     </>
   );
 }
