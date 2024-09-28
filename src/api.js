@@ -91,6 +91,25 @@ export async function get_expenses(
   }
 }
 
+export async function get_expenses_monthly_totals(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  months
+) {
+  try {
+    const response = await axios.get(BASE_URL + "/expense/monthly_totals", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { months },
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
 export async function delete_expenses(
   token,
   setAccessToken,
