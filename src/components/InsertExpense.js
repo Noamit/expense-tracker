@@ -96,6 +96,10 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
               id="expense-amount"
               label="Amount"
               variant="outlined"
+              inputProps={{
+                step: "0.01", // Allow decimal values
+                min: "0", // Optional: define the minimum value if needed
+              }}
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}

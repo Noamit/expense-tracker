@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import {
+  Button,
+  TextField,
+  MenuItem,
+  Container,
+  Box,
+  Typography,
+} from "@mui/material";
 import { get_expense, update_expense } from "../api";
 import NavBar from "../Navbar";
 
@@ -57,7 +65,6 @@ function Expense({ setAccessToken, setRefreshToken }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       const formData = new FormData();
       Object.keys(updatedExpense).forEach((key) => {
@@ -83,104 +90,129 @@ function Expense({ setAccessToken, setRefreshToken }) {
   return (
     <>
       <NavBar />
-      <div className="container">
-        <h1>Edit Expense</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">
-              <strong>Name:</strong>
-            </label>
-            <input
-              type="text"
-              id="name"
+      <Container maxWidth="sm">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Edit Expense
+          </Typography>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            style={{ width: "100%", marginTop: "20px" }}
+          >
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-name"
+              label="Expense Name"
+              variant="outlined"
               name="name"
+              InputLabelProps={{
+                shrink: expense.name !== "" && expense.name !== null, // Force label to shrink when there's a value
+              }}
               value={expense.name}
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div>
-            <label htmlFor="description">
-              <strong>Description:</strong>
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={expense.description}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="amount">
-              <strong>Amount:</strong>
-            </label>
-            <input
+
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-amount"
+              label="Amount"
+              variant="outlined"
               type="number"
-              id="amount"
+              inputProps={{
+                step: "0.01",
+                min: "0",
+              }}
+              InputLabelProps={{
+                shrink: expense.amount !== "" && expense.amount !== null, // Force label to shrink when there's a value
+              }}
               name="amount"
-              step="0.01"
               value={expense.amount}
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div>
-            <label htmlFor="date">
-              <strong>Date:</strong>
-            </label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={expense.date}
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-description"
+              label="Expense Description"
+              variant="outlined"
+              name="description"
+              value={expense.description}
+              InputLabelProps={{
+                shrink:
+                  expense.description !== "" && expense.description !== null, // Force label to shrink when there's a value
+              }}
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div>
+            <TextField
+              fullWidth
+              margin="normal"
+              id="expense-date"
+              label="Date"
+              variant="outlined"
+              type="date"
+              name="date"
+              value={expense.date}
+              onChange={handleInputChange}
+              InputLabelProps={{ shrink: true }}
+              required
+            />
+
+            <TextField
+              fullWidth
+              select
+              margin="normal"
+              label="Select Category"
+              value={expense.category_id || ""}
+              onChange={handleCategoryChange}
+              required
+            >
+              {categories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </TextField>
             {expense.receipt_url && (
               <div>
                 <img src={expense.receipt_url} alt="Uploaded File" />
               </div>
             )}
-            <div>
-              <label htmlFor="receipt">
-                <strong>Upload Receipt:</strong>
-              </label>
+            <Button variant="contained" component="label">
+              Upload Receipt
               <input
                 type="file"
-                id="receipt"
+                hidden
                 name="receipt"
-                accept="image/*" // Optional: Limit to image file types
-                onChange={handleFileChange} // Function to handle file selection
+                accept="image/*"
+                onChange={handleFileChange}
               />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="category">
-              <strong>Category:</strong>
-            </label>
-            <select
-              className="expense-input"
-              id="expense-category"
-              value={expense.category_id || ""}
-              onChange={handleCategoryChange}
-              required
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ marginTop: "20px" }}
             >
-              <option value="" disabled>
-                Select Category
-              </option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button type="submit">Save Changes</button>
-        </form>
-      </div>
+              Save Changes
+            </Button>
+          </form>
+        </Box>
+      </Container>
     </>
   );
 }
