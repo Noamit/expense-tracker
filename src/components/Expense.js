@@ -32,7 +32,6 @@ function Expense({ setAccessToken, setRefreshToken }) {
         navigate,
         id
       ).then((value) => {
-        console.log(value);
         setExpense(value);
       });
     } catch (error) {

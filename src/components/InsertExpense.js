@@ -55,8 +55,6 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
         navigate,
         formData
       );
-
-      console.log(result);
     } catch (error) {
       console.error(error);
     }

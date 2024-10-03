@@ -41,7 +41,6 @@ function Categories({ setAccessToken, setRefreshToken }) {
         description
       );
       setCategories([...categories, result]);
-      console.log(result);
     } catch (error) {
       console.error(error);
     }

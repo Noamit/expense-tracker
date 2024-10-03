@@ -18,7 +18,6 @@ function Login({ setAccessToken, setRefreshToken }) {
   const handleLogin = async () => {
     try {
       const response = await login(username, password);
-      console.log(response.data);
       setAccessToken(response.data.access_token);
       setRefreshToken(response.data.refresh_token);
       localStorage.setItem("access_token", response.data.access_token);
