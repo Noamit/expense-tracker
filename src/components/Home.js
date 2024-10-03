@@ -8,6 +8,8 @@ import {
   get_expenses_monthly_totals,
 } from "../api";
 import "../css/home.css";
+import ExpenseFilter from "./ExpenseFilter";
+
 import NavBar from "../Navbar";
 import CustomBarChart from "../components/CustomBarChart";
 
@@ -18,7 +20,7 @@ function Home({ setAccessToken, setRefreshToken }) {
   const [expenses, setExpenses] = useState([]);
   const [expensesMonthlyTotals, setExpensesMonthlyTotals] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [months, setMonths] = useState([]);
+  const [months, setMonths] = useState(6);
 
   const options = [
     { id: 1, name: "previous month" },
@@ -40,7 +42,6 @@ function Home({ setAccessToken, setRefreshToken }) {
         setRefreshToken,
         navigate
       ).then((value) => {
-        console.log(value);
         setExpensesMonthlyTotals(value);
       });
       get_categories(
@@ -84,6 +85,18 @@ function Home({ setAccessToken, setRefreshToken }) {
     }
   };
 
+  const handleFilter = async (filters) => {
+    get_expenses(
+      accessToken,
+      setAccessToken,
+      setRefreshToken,
+      navigate,
+      filters
+    ).then((value) => {
+      setExpenses(value);
+    });
+  };
+
   return (
     <>
       <NavBar />
@@ -105,6 +118,11 @@ function Home({ setAccessToken, setRefreshToken }) {
           ))}
         </TextField>
         <CustomBarChart data={expensesMonthlyTotals} />
+
+        <div>
+          <ExpenseFilter categories={categories} onFilter={handleFilter} />
+          {/* Render your list of expenses here */}
+        </div>
         <div>
           <button
             id="create-expense"

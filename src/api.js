@@ -77,13 +77,15 @@ export async function get_expenses(
   token,
   setAccessToken,
   setRefreshToken,
-  navigate
+  navigate,
+  filters = {}
 ) {
   try {
     const response = await axios.get(BASE_URL + "/expense", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      params: filters,
     });
     return response.data;
   } catch (error) {
