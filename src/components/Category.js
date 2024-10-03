@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { get_category, update_category } from "../api";
+import {
+  Button,
+  TextField,
+  MenuItem,
+  Container,
+  Box,
+  Typography,
+} from "@mui/material";
 import NavBar from "../Navbar";
 
 function Category({ setAccessToken, setRefreshToken }) {
@@ -37,7 +45,6 @@ function Category({ setAccessToken, setRefreshToken }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       await update_category(
         accessToken,
@@ -59,37 +66,66 @@ function Category({ setAccessToken, setRefreshToken }) {
   return (
     <>
       <NavBar />
-      <div className="container">
-        <h1>Edit Category</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">
-              <strong>Name:</strong>
-            </label>
-            <input
-              type="text"
-              id="name"
+      <Container maxWidth="sm">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Edit Category
+          </Typography>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            style={{ width: "100%", marginTop: "20px" }}
+          >
+            <TextField
+              fullWidth
+              margin="normal"
+              id="category-name"
+              label="Category Name"
+              variant="outlined"
               name="name"
+              InputLabelProps={{
+                shrink: category.name !== "" && category.name !== null, // Force label to shrink when there's a value
+              }}
               value={category.name}
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div>
-            <label htmlFor="description">
-              <strong>Description:</strong>
-            </label>
-            <textarea
-              id="description"
+            <TextField
+              fullWidth
+              margin="normal"
+              id="category-description"
+              label="Category Description"
+              variant="outlined"
               name="description"
               value={category.description}
+              InputLabelProps={{
+                shrink:
+                  category.description !== "" && category.description !== null, // Force label to shrink when there's a value
+              }}
               onChange={handleInputChange}
             />
-          </div>
 
-          <button type="submit">Save Changes</button>
-        </form>
-      </div>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ marginTop: "20px" }}
+            >
+              Save Changes
+            </Button>
+          </form>
+        </Box>
+      </Container>
     </>
   );
 }
