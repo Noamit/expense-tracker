@@ -188,8 +188,22 @@ function Expense({ setAccessToken, setRefreshToken }) {
               ))}
             </TextField>
             {expense.receipt_url && (
-              <div>
-                <img src={expense.receipt_url} alt="Uploaded File" />
+              <div style={{ marginBottom: "20px" }}>
+                <a
+                  href={expense.receipt_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src={expense.receipt_url}
+                    alt="Uploaded File"
+                    style={{
+                      width: "100px",
+                      height: "auto",
+                      cursor: "pointer",
+                    }}
+                  />
+                </a>
               </div>
             )}
             <Button variant="contained" component="label">

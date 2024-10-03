@@ -22,6 +22,7 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
   const [date, setDate] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [receipt, setReceipt] = useState(null); // New state variable for receipt image
+  const [receiptUrl, setReceiptUrl] = useState(null); // New state variable for receipt image
 
   const location = useLocation();
   const { categories } = location.state || {}; // Extract categories from the state
@@ -29,7 +30,10 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
-    setReceipt(e.target.files[0]);
+    const file = e.target.files[0];
+    const fileURL = URL.createObjectURL(file);
+    setReceipt(file);
+    setReceiptUrl(fileURL);
   };
 
   const handleInsert = async () => {
@@ -143,6 +147,21 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
                   </MenuItem>
                 ))}
             </TextField>
+            {receiptUrl && (
+              <div style={{ marginBottom: "20px" }}>
+                <a href={receiptUrl} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={receiptUrl}
+                    alt="Uploaded File"
+                    style={{
+                      width: "100px",
+                      height: "auto",
+                      cursor: "pointer",
+                    }}
+                  />
+                </a>
+              </div>
+            )}
             <Button variant="contained" component="label">
               Upload Receipt
               <input
