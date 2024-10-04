@@ -8,6 +8,11 @@ import Category from "./components/Category";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
+import Langs from "./components/Langs";
+import Translates from "./components/Translates";
+import Translate from "./components/Translate";
+import InsertTranslate from "./components/InsertTranslate";
+import { isAdmin } from "./auth"; // Path to the isAdmin function
 
 function App() {
   // localStorage.clear();
@@ -63,6 +68,50 @@ function App() {
                 />
               }
             />
+            {isAdmin(accessToken) && (
+              <Route
+                path="/translate"
+                element={
+                  <InsertTranslate
+                    setAccessToken={setAccessToken}
+                    setRefreshToken={setRefreshToken}
+                  />
+                }
+              />
+            )}
+            {isAdmin(accessToken) && (
+              <Route
+                path="/translate/:id"
+                element={
+                  <Translate
+                    setAccessToken={setAccessToken}
+                    setRefreshToken={setRefreshToken}
+                  />
+                }
+              />
+            )}
+            {isAdmin(accessToken) && (
+              <Route
+                path="/langs"
+                element={
+                  <Langs
+                    setAccessToken={setAccessToken}
+                    setRefreshToken={setRefreshToken}
+                  />
+                }
+              />
+            )}
+            {isAdmin(accessToken) && (
+              <Route
+                path="/translates"
+                element={
+                  <Translates
+                    setAccessToken={setAccessToken}
+                    setRefreshToken={setRefreshToken}
+                  />
+                }
+              />
+            )}
             <Route
               path="/expense/:id"
               element={
