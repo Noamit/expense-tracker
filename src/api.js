@@ -231,6 +231,186 @@ export async function update_category(
   }
 }
 
+export async function get_langs(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  filters = {}
+) {
+  try {
+    const response = await axios.get(BASE_URL + "/lang", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: filters,
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function insert_lang(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  name
+) {
+  const postRequest = { name: name };
+
+  try {
+    const response = await axios.post(BASE_URL + "/lang", postRequest, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function delete_lang(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  id
+) {
+  try {
+    const response = await axios.delete(BASE_URL + "/lang/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function update_lang(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  id,
+  lang
+) {
+  try {
+    const response = await axios.put(BASE_URL + "/lang/" + id, lang, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function insert_translate(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  translate
+) {
+  try {
+    const response = await axios.post(BASE_URL + "/translate", translate, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function get_translate(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  id
+) {
+  try {
+    const response = await axios.get(BASE_URL + "/translate/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function update_translate(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  id,
+  translate
+) {
+  try {
+    const response = await axios.put(BASE_URL + "/translate/" + id, translate, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function get_translates(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  filters = {}
+) {
+  try {
+    const response = await axios.get(BASE_URL + "/translate", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: filters,
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function delete_translate(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  id
+) {
+  try {
+    const response = await axios.delete(BASE_URL + "/translate/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
 function handle_auth_error(setAccessToken, setRefreshToken, navigate, error) {
   if (error.response && error.response.status === 401) {
     // Token is expired or invalid
