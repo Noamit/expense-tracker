@@ -16,6 +16,10 @@ function Home({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
 
+  const storedTranslations = localStorage.getItem("translations");
+  const parsedTranslations = storedTranslations
+    ? JSON.parse(storedTranslations)
+    : null;
   const [expenses, setExpenses] = useState([]);
   const [expensesMonthlyTotals, setExpensesMonthlyTotals] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -130,19 +134,36 @@ function Home({ setAccessToken, setRefreshToken }) {
               })
             }
           >
-            Add Expense
+            {parsedTranslations
+              ? parsedTranslations.add_expense_button
+              : "Add Expense"}
           </button>
         </div>
         <div className="expense-table">
           <table>
             <thead>
               <tr>
-                <th>Expense Name</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Action</th>
+                <th>
+                  {parsedTranslations
+                    ? parsedTranslations.expense_name
+                    : "Expense Name"}
+                </th>
+                <th>
+                  {parsedTranslations
+                    ? parsedTranslations.description
+                    : "Description"}
+                </th>
+                <th>
+                  {parsedTranslations
+                    ? parsedTranslations.category
+                    : "Category"}
+                </th>
+                <th>
+                  {parsedTranslations ? parsedTranslations.amount : "Amount"}
+                </th>
+                <th>
+                  {parsedTranslations ? parsedTranslations.action : "Action"}
+                </th>
               </tr>
             </thead>
             <tbody id="expense-list">
@@ -164,7 +185,7 @@ function Home({ setAccessToken, setRefreshToken }) {
                         })
                       }
                     >
-                      Edit
+                      {parsedTranslations ? parsedTranslations.edit : "Edit"}
                     </button>
                     <button
                       id="delete-expense"
@@ -174,7 +195,9 @@ function Home({ setAccessToken, setRefreshToken }) {
                         handle_delete(expense.id);
                       }}
                     >
-                      Delete
+                      {parsedTranslations
+                        ? parsedTranslations.delete
+                        : "Delete"}
                     </button>
                   </td>
                 </tr>
@@ -182,7 +205,10 @@ function Home({ setAccessToken, setRefreshToken }) {
             </tbody>
           </table>
           <div className="total-amount">
-            <strong>Total:</strong>$
+            <strong>
+              {parsedTranslations ? parsedTranslations.total : "Total"}:
+            </strong>
+            $
             <span id="total-amount">
               {expenses
                 .reduce((total, expense) => total + expense.amount, 0)
