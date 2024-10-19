@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { get_categories, insert_category, delete_category } from "../api";
-import NavBar from "../Navbar";
 import "../css/Categories.css";
 import { useNavigate } from "react-router-dom";
 
@@ -66,7 +65,6 @@ function Categories({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
       <div className="container">
         <form id="category-form">
           <input

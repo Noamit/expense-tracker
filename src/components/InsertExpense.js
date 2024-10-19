@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 
 import { insert_expense } from "../api";
-import NavBar from "../Navbar";
 
 function InsertExpense({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
@@ -62,7 +61,6 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="sm">
         <Box
           sx={{

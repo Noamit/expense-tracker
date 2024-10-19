@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 
 import { insert_translate } from "../api";
-import NavBar from "../Navbar";
 
 function InsertTranslate({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
@@ -43,7 +42,6 @@ function InsertTranslate({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="sm">
         <Box
           sx={{

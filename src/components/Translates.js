@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { get_translates, delete_translate, get_langs } from "../api";
 import "../css/home.css";
 
-import NavBar from "../Navbar";
-
 function Translates({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
@@ -53,8 +51,6 @@ function Translates({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
-
       <div className="container">
         <div>
           <button

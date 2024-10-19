@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { get_langs, insert_lang, delete_lang, update_lang } from "../api";
-import NavBar from "../Navbar";
 import "../css/Categories.css";
 import { useNavigate } from "react-router-dom";
 
@@ -89,7 +88,6 @@ function Langs({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
       <div className="container">
         <form id="category-form">
           <input

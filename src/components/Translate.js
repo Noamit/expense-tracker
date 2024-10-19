@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import { get_translate, update_translate } from "../api";
-import NavBar from "../Navbar";
 
 function Translate({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
@@ -76,7 +75,6 @@ function Translate({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="sm">
         <Box
           sx={{

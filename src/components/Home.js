@@ -10,7 +10,6 @@ import {
 import "../css/home.css";
 import ExpenseFilter from "./ExpenseFilter";
 
-import NavBar from "../Navbar";
 import CustomBarChart from "../components/CustomBarChart";
 
 function Home({ setAccessToken, setRefreshToken }) {
@@ -99,8 +98,6 @@ function Home({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
-
       <div className="container">
         <TextField
           fullWidth

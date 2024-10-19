@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import { get_expense, update_expense } from "../api";
-import NavBar from "../Navbar";
 
 function Expense({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
@@ -88,7 +87,6 @@ function Expense({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="sm">
         <Box
           sx={{

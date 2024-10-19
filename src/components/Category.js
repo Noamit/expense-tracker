@@ -9,7 +9,6 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import NavBar from "../Navbar";
 
 function Category({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
@@ -65,7 +64,6 @@ function Category({ setAccessToken, setRefreshToken }) {
 
   return (
     <>
-      <NavBar />
       <Container maxWidth="sm">
         <Box
           sx={{
