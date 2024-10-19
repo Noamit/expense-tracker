@@ -411,6 +411,18 @@ export async function delete_translate(
   }
 }
 
+export async function get_gd(filters = {}) {
+  try {
+    const response = await axios.get(BASE_URL + "/Gd", {
+      params: filters,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("An error occurred:", error);
+    throw error; // Optionally rethrow the error if it's something else
+  }
+}
+
 function handle_auth_error(setAccessToken, setRefreshToken, navigate, error) {
   if (error.response && error.response.status === 401) {
     // Token is expired or invalid
