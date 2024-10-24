@@ -11,8 +11,14 @@ const ExpenseFilter = ({ categories, onFilter }) => {
     const filtered_data = Object.fromEntries(
       Object.entries(filter_data).filter(([key, value]) => value !== "")
     );
-
     onFilter(filtered_data);
+  };
+
+  const handleClear = () => {
+    setName("");
+    setCategoryId("");
+    setDate("");
+    onFilter({});
   };
 
   return (
@@ -59,9 +65,16 @@ const ExpenseFilter = ({ categories, onFilter }) => {
         />
       </Grid>
       <Grid item xs={12} sm={3}>
-        <Button variant="contained" color="primary" onClick={handleFilter}>
-          Filter
-        </Button>
+        <Grid item xs={12} sm={3}>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <Button variant="contained" color="primary" onClick={handleFilter}>
+              Filter
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleClear}>
+              Clear
+            </Button>
+          </div>
+        </Grid>
       </Grid>
     </Grid>
   );

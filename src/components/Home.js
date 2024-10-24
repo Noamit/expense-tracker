@@ -21,6 +21,9 @@ function Home({ setAccessToken, setRefreshToken }) {
     ? JSON.parse(storedTranslations)
     : null;
   const [expenses, setExpenses] = useState([]);
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState({});
   const [expensesMonthlyTotals, setExpensesMonthlyTotals] = useState([]);
   const [categories, setCategories] = useState([]);
   const [months, setMonths] = useState(6);
@@ -36,7 +39,8 @@ function Home({ setAccessToken, setRefreshToken }) {
     try {
       get_expenses(accessToken, setAccessToken, setRefreshToken, navigate).then(
         (value) => {
-          setExpenses(value);
+          setExpenses(value.expenses);
+          setTotalPages(value.total_pages);
         }
       );
       get_expenses_monthly_totals(
@@ -72,6 +76,19 @@ function Home({ setAccessToken, setRefreshToken }) {
     });
   }, [months, expenses]);
 
+  useEffect(() => {
+    get_expenses(
+      accessToken,
+      setAccessToken,
+      setRefreshToken,
+      navigate,
+      filters
+    ).then((value) => {
+      setExpenses(value.expenses);
+      setTotalPages(value.total_pages);
+    });
+  }, [currentPage]);
+
   const handle_delete = async (id) => {
     try {
       await delete_expenses(
@@ -96,8 +113,17 @@ function Home({ setAccessToken, setRefreshToken }) {
       navigate,
       filters
     ).then((value) => {
-      setExpenses(value);
+      setExpenses(value.expenses);
+      setTotalPages(value.total_pages);
+      setFilters(filters);
+      setCurrentPage(1);
     });
+  };
+
+  const handlePageChange = (page) => {
+    filters.page = page;
+    setFilters(filters);
+    setCurrentPage(page);
   };
 
   return (
@@ -214,6 +240,36 @@ function Home({ setAccessToken, setRefreshToken }) {
                 .reduce((total, expense) => total + expense.amount, 0)
                 .toFixed(2)}
             </span>
+          </div>
+          {/* Pagination Bar */}
+          <div className="pagination-bar">
+            {currentPage !== 1 && (
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+                {/* {parsedTranslations ? parsedTranslations.previous : "Previous"} */}
+              </button>
+            )}
+
+            <span>
+              Page{" "}
+              {/* {parsedTranslations ? parsedTranslations.page : "Page"}{" "} */}
+              {currentPage} of
+              {/* {parsedTranslations ? parsedTranslations.of : "of"} */}{" "}
+              {totalPages}
+            </span>
+
+            {currentPage !== totalPages && (
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Next
+                {/* {parsedTranslations ? parsedTranslations.next : "Next"} */}
+              </button>
+            )}
           </div>
         </div>
       </div>
