@@ -49,7 +49,11 @@ function Home({ setAccessToken, setRefreshToken }) {
         setRefreshToken,
         navigate
       ).then((value) => {
-        setExpensesMonthlyTotals(value);
+        const newExpensesMonthlyTotals = value.map((val) => ({
+          amount: val.amount,
+          month: val.month + " " + val.year,
+        }));
+        setExpensesMonthlyTotals(newExpensesMonthlyTotals);
       });
       get_categories(
         accessToken,
@@ -72,7 +76,11 @@ function Home({ setAccessToken, setRefreshToken }) {
       navigate,
       months
     ).then((value) => {
-      setExpensesMonthlyTotals(value);
+      const newExpensesMonthlyTotals = value.map((val) => ({
+        amount: val.amount,
+        month: val.month + " " + val.year,
+      }));
+      setExpensesMonthlyTotals(newExpensesMonthlyTotals);
     });
   }, [months, expenses]);
 
