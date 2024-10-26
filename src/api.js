@@ -48,6 +48,7 @@ export async function get_expense(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return {};
   }
 }
 
@@ -90,6 +91,7 @@ export async function get_expenses(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return { expenses: [], total_pages: 1 };
   }
 }
 
@@ -110,6 +112,7 @@ export async function get_expenses_monthly_totals(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return [];
   }
 }
 export async function delete_expenses(
@@ -147,6 +150,7 @@ export async function get_category(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return {};
   }
 }
 
@@ -188,6 +192,7 @@ export async function get_categories(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return [];
   }
 }
 
@@ -248,6 +253,7 @@ export async function get_langs(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return [];
   }
 }
 
@@ -348,6 +354,7 @@ export async function get_translate(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return {};
   }
 }
 
@@ -389,6 +396,7 @@ export async function get_translates(
     return response.data;
   } catch (error) {
     handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return [];
   }
 }
 
@@ -419,7 +427,7 @@ export async function get_gd(filters = {}) {
     return response.data;
   } catch (error) {
     console.error("An error occurred:", error);
-    throw error; // Optionally rethrow the error if it's something else
+    return { lang_id: 1, translations: [], langs: [] };
   }
 }
 
@@ -432,6 +440,5 @@ function handle_auth_error(setAccessToken, setRefreshToken, navigate, error) {
     navigate("/"); // Redirect to the login page
   } else {
     console.error("An error occurred:", error);
-    throw error; // Optionally rethrow the error if it's something else
   }
 }
