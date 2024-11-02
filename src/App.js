@@ -56,6 +56,13 @@ function App() {
     }
   }, [generalDeclaration]);
 
+  const handleLogout = () => {
+    localStorage.clear();
+
+    setAccessToken("");
+    setRefreshToken("");
+    // Optionally redirect to the login page or perform any other actions needed
+  };
   const handleLangChange = async (newLangId) => {
     try {
       get_gd({ lang_id: newLangId }).then((value) => {
@@ -94,14 +101,11 @@ function App() {
         </Routes>
       ) : (
         <>
-          <NavBar
-            onLangChange={handleLangChange}
-            generalDeclaration={generalDeclaration}
-          />
           <div style={{ display: "flex" }}>
             <SideBar
               onLangChange={handleLangChange}
               generalDeclaration={generalDeclaration}
+              onLogout={handleLogout}
             />
             <div style={{ flex: 1, padding: "20px", marginLeft: "80px" }}>
               <Routes>

@@ -1,11 +1,19 @@
 // Sidebar.js
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link
-import { FaList, FaUser, FaCog, FaHome, FaGlobe, FaBook } from "react-icons/fa";
+import {
+  FaList,
+  FaUser,
+  FaCog,
+  FaHome,
+  FaGlobe,
+  FaBook,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 import { isAdmin } from "./auth"; // Path to the isAdmin function
 
-function SideBar({ onLangChange, generalDeclaration }) {
+function SideBar({ onLangChange, generalDeclaration, onLogout }) {
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
   const storedGD = localStorage.getItem("general_declaration");
@@ -14,13 +22,17 @@ function SideBar({ onLangChange, generalDeclaration }) {
   const langs = parsedGD ? parsedGD.langs : {};
   return (
     <div style={styles.sidebar}>
+      <div style={styles.iconContainer}>
+        <FaUser style={styles.icon} />
+        <span>Profile</span>
+      </div>
       <Link to="/" style={styles.link}>
         <div style={styles.iconContainer}>
           <FaHome style={styles.icon} />
           <span>Home</span>
         </div>
       </Link>
-      {/* <Link to="/category" style={styles.link}>
+      <Link to="/category" style={styles.link}>
         <div style={styles.iconContainer}>
           <FaList style={styles.icon} />
           <span>Categories</span>
@@ -41,14 +53,15 @@ function SideBar({ onLangChange, generalDeclaration }) {
             <span>Translates</span>
           </div>
         </Link>
-      )} */}
-      <div style={styles.iconContainer}>
-        <FaUser style={styles.icon} />
-        <span>Profile</span>
-      </div>
+      )}
+
       <div style={styles.iconContainer}>
         <FaCog style={styles.icon} />
         <span>Settings</span>
+      </div>
+      <div style={styles.iconContainer} onClick={onLogout}>
+        <FaSignOutAlt style={styles.icon} />
+        <span style={styles.link}>Logout</span>
       </div>
     </div>
   );
