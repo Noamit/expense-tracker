@@ -1,6 +1,6 @@
 // Sidebar.js
 import React from "react";
-import { Link } from "react-router-dom"; // Import Link
+import { Link, useNavigate } from "react-router-dom"; // Import Link
 import {
   FaList,
   FaUser,
@@ -17,7 +17,7 @@ function SideBar({ onLangChange, generalDeclaration, onLogout }) {
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
   const storedGD = localStorage.getItem("general_declaration");
-
+  const navigate = useNavigate();
   const parsedGD = storedGD ? JSON.parse(storedGD) : null;
   const langs = parsedGD ? parsedGD.langs : {};
   return (
@@ -59,7 +59,13 @@ function SideBar({ onLangChange, generalDeclaration, onLogout }) {
         <FaCog style={styles.icon} />
         <span>Settings</span>
       </div>
-      <div style={styles.iconContainer} onClick={onLogout}>
+      <div
+        style={styles.iconContainer}
+        onClick={() => {
+          navigate("/");
+          onLogout();
+        }}
+      >
         <FaSignOutAlt style={styles.icon} />
         <span style={styles.link}>Logout</span>
       </div>
