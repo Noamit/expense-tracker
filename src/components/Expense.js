@@ -153,7 +153,6 @@ function Expense({ setAccessToken, setRefreshToken }) {
                   expense.description !== "" && expense.description !== null, // Force label to shrink when there's a value
               }}
               onChange={handleInputChange}
-              required
             />
             <TextField
               fullWidth

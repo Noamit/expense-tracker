@@ -8,7 +8,7 @@ function Categories({ setAccessToken, setRefreshToken }) {
   const refreshToken = localStorage.getItem("refresh_token");
 
   const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
+  const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
@@ -83,7 +83,6 @@ function Categories({ setAccessToken, setRefreshToken }) {
             placeholder="Category Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
           />
           <button
             type="submit"
@@ -108,7 +107,7 @@ function Categories({ setAccessToken, setRefreshToken }) {
               {categories.map((category, index) => (
                 <tr key={category.id}>
                   <td>{category.name}</td>
-                  <td>{category.description}</td>
+                  <td>{category.description || ""}</td>
                   <td>
                     <button
                       id="edit-category"

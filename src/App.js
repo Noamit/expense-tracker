@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./css/App.css";
@@ -15,6 +16,7 @@ import InsertTranslate from "./components/InsertTranslate";
 import { isAdmin } from "./auth"; // Path to the isAdmin function
 import { get_gd } from "./api";
 import NavBar from "./Navbar";
+import SideBar from "./Sidebar";
 
 function App() {
   const storedAccessToken = localStorage.getItem("access_token");
@@ -29,7 +31,6 @@ function App() {
     storedGD || null
   );
 
-  // Fetch GD API when app loads
   useEffect(() => {
     const fetchGD = async () => {
       try {
@@ -39,7 +40,7 @@ function App() {
         }
         get_gd(filters).then((value) => {
           setGeneralDeclaration(value);
-          localStorage.setItem("general_declaration", JSON.stringify(value)); // Save GD in localStorage
+          localStorage.setItem("general_declaration", JSON.stringify(value));
           localStorage.setItem(
             "translations",
             JSON.stringify(value.translations)
@@ -60,7 +61,7 @@ function App() {
       get_gd({ lang_id: newLangId }).then((value) => {
         setGeneralDeclaration(value);
         setLangID(newLangId);
-        localStorage.setItem("general_declaration", JSON.stringify(value)); // Save GD in localStorage
+        localStorage.setItem("general_declaration", JSON.stringify(value));
         localStorage.setItem(
           "translations",
           JSON.stringify(value.translations)
@@ -75,124 +76,130 @@ function App() {
   };
 
   return (
-    <>
+    <BrowserRouter>
+      {" "}
+      {/* Use a single BrowserRouter to wrap everything */}
       {!accessToken ? (
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Login
-                  setAccessToken={setAccessToken}
-                  setRefreshToken={setRefreshToken}
-                />
-              }
-            ></Route>
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Login
+                setAccessToken={setAccessToken}
+                setRefreshToken={setRefreshToken}
+              />
+            }
+          />
+          <Route path="/register" element={<Register />} />
+        </Routes>
       ) : (
         <>
           <NavBar
             onLangChange={handleLangChange}
             generalDeclaration={generalDeclaration}
           />
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home
-                    setAccessToken={setAccessToken}
-                    setRefreshToken={setRefreshToken}
-                  />
-                }
-              />
-              <Route
-                path="/category"
-                element={
-                  <Categories
-                    setAccessToken={setAccessToken}
-                    setRefreshToken={setRefreshToken}
-                  />
-                }
-              />
-              <Route
-                path="/expense"
-                element={
-                  <InsertExpense
-                    setAccessToken={setAccessToken}
-                    setRefreshToken={setRefreshToken}
-                  />
-                }
-              />
-              {isAdmin(accessToken) && (
+          <div style={{ display: "flex" }}>
+            <SideBar
+              onLangChange={handleLangChange}
+              generalDeclaration={generalDeclaration}
+            />
+            <div style={{ flex: 1, padding: "20px", marginLeft: "80px" }}>
+              <Routes>
                 <Route
-                  path="/translate"
+                  path="/"
                   element={
-                    <InsertTranslate
+                    <Home
                       setAccessToken={setAccessToken}
                       setRefreshToken={setRefreshToken}
                     />
                   }
                 />
-              )}
-              {isAdmin(accessToken) && (
                 <Route
-                  path="/translate/:id"
+                  path="/category"
                   element={
-                    <Translate
+                    <Categories
                       setAccessToken={setAccessToken}
                       setRefreshToken={setRefreshToken}
                     />
                   }
                 />
-              )}
-              {isAdmin(accessToken) && (
                 <Route
-                  path="/langs"
+                  path="/expense"
                   element={
-                    <Langs
+                    <InsertExpense
                       setAccessToken={setAccessToken}
                       setRefreshToken={setRefreshToken}
                     />
                   }
                 />
-              )}
-              {isAdmin(accessToken) && (
-                <Route
-                  path="/translates"
-                  element={
-                    <Translates
-                      setAccessToken={setAccessToken}
-                      setRefreshToken={setRefreshToken}
-                    />
-                  }
-                />
-              )}
-              <Route
-                path="/expense/:id"
-                element={
-                  <Expense
-                    setAccessToken={setAccessToken}
-                    setRefreshToken={setRefreshToken}
+                {isAdmin(accessToken) && (
+                  <Route
+                    path="/translate"
+                    element={
+                      <InsertTranslate
+                        setAccessToken={setAccessToken}
+                        setRefreshToken={setRefreshToken}
+                      />
+                    }
                   />
-                }
-              />
-              <Route
-                path="/category/:id"
-                element={
-                  <Category
-                    setAccessToken={setAccessToken}
-                    setRefreshToken={setRefreshToken}
+                )}
+                {isAdmin(accessToken) && (
+                  <Route
+                    path="/translate/:id"
+                    element={
+                      <Translate
+                        setAccessToken={setAccessToken}
+                        setRefreshToken={setRefreshToken}
+                      />
+                    }
                   />
-                }
-              />
-            </Routes>
-          </BrowserRouter>
+                )}
+                {isAdmin(accessToken) && (
+                  <Route
+                    path="/langs"
+                    element={
+                      <Langs
+                        setAccessToken={setAccessToken}
+                        setRefreshToken={setRefreshToken}
+                      />
+                    }
+                  />
+                )}
+                {isAdmin(accessToken) && (
+                  <Route
+                    path="/translates"
+                    element={
+                      <Translates
+                        setAccessToken={setAccessToken}
+                        setRefreshToken={setRefreshToken}
+                      />
+                    }
+                  />
+                )}
+                <Route
+                  path="/expense/:id"
+                  element={
+                    <Expense
+                      setAccessToken={setAccessToken}
+                      setRefreshToken={setRefreshToken}
+                    />
+                  }
+                />
+                <Route
+                  path="/category/:id"
+                  element={
+                    <Category
+                      setAccessToken={setAccessToken}
+                      setRefreshToken={setRefreshToken}
+                    />
+                  }
+                />
+              </Routes>
+            </div>
+          </div>
         </>
       )}
-    </>
+    </BrowserRouter>
   );
 }
 
