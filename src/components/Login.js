@@ -11,7 +11,7 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 
-function Login({ setAccessToken, setRefreshToken }) {
+function Login({ setAccessToken, setRefreshToken, onLangChange }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,6 +22,7 @@ function Login({ setAccessToken, setRefreshToken }) {
       setRefreshToken(response.data.refresh_token);
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
+      onLangChange(response.data.lang_id);
     } catch (error) {
       console.error(error);
     }

@@ -96,6 +96,7 @@ function App() {
               <Login
                 setAccessToken={setAccessToken}
                 setRefreshToken={setRefreshToken}
+                onLangChange={handleLangChange}
               />
             }
           />
