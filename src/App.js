@@ -17,6 +17,7 @@ import { isAdmin } from "./auth"; // Path to the isAdmin function
 import { get_gd } from "./api";
 import NavBar from "./Navbar";
 import SideBar from "./Sidebar";
+import Profile from "./components/Profile";
 
 function App() {
   const storedAccessToken = localStorage.getItem("access_token");
@@ -45,12 +46,12 @@ function App() {
             "translations",
             JSON.stringify(value.translations)
           );
+          localStorage.setItem("lang_id", value.lang_id);
         });
       } catch (error) {
         console.error(error);
       }
     };
-
     if (!generalDeclaration) {
       fetchGD();
     }
@@ -73,6 +74,7 @@ function App() {
           "translations",
           JSON.stringify(value.translations)
         );
+        localStorage.setItem("lang_id", value.lang_id);
       });
     } catch (error) {
       console.error(
@@ -109,6 +111,17 @@ function App() {
             />
             <div style={{ flex: 1, padding: "20px", marginLeft: "80px" }}>
               <Routes>
+                <Route
+                  path="/profile"
+                  element={
+                    <Profile
+                      onLangChange={handleLangChange}
+                      setAccessToken={setAccessToken}
+                      setRefreshToken={setRefreshToken}
+                    />
+                  }
+                />
+
                 <Route
                   path="/"
                   element={

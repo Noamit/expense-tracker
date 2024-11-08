@@ -11,6 +11,52 @@ export async function login(username, password) {
   return await axios.post(BASE_URL + "/login", postRequest);
 }
 
+export async function update_password(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  passwordData
+) {
+  try {
+    const response = await axios.put(BASE_URL + "/user", passwordData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response.data);
+    if (response.status === 202) {
+      return { updated: false, data: response.data.message };
+    }
+    return { updated: true, data: response.data };
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
+export async function update_settings(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  lang_id
+) {
+  try {
+    const response = await axios.put(
+      BASE_URL + "/settings",
+      { lang_id: lang_id },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+  }
+}
+
 export async function insert_expense(
   token,
   setAccessToken,

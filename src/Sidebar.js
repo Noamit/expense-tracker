@@ -22,10 +22,13 @@ function SideBar({ onLangChange, generalDeclaration, onLogout }) {
   const langs = parsedGD ? parsedGD.langs : {};
   return (
     <div style={styles.sidebar}>
-      <div style={styles.iconContainer}>
-        <FaUser style={styles.icon} />
-        <span>Profile</span>
-      </div>
+      <Link to="/profile" style={styles.link}>
+        <div style={styles.iconContainer}>
+          <FaUser style={styles.icon} />
+          <span>Profile</span>
+        </div>
+      </Link>
+
       <Link to="/" style={styles.link}>
         <div style={styles.iconContainer}>
           <FaHome style={styles.icon} />
@@ -54,11 +57,11 @@ function SideBar({ onLangChange, generalDeclaration, onLogout }) {
           </div>
         </Link>
       )}
-
+      {/* 
       <div style={styles.iconContainer}>
         <FaCog style={styles.icon} />
         <span>Settings</span>
-      </div>
+      </div> */}
       <div
         style={styles.iconContainer}
         onClick={() => {
@@ -77,7 +80,7 @@ const styles = {
   sidebar: {
     height: "100vh",
     width: "80px",
-    backgroundColor: "#2c3e50",
+    backgroundColor: "#000000",
     color: "#ecf0f1",
     display: "flex",
     flexDirection: "column",
