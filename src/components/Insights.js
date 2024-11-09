@@ -81,13 +81,11 @@ function Insights({ setAccessToken, setRefreshToken }) {
         </div>
 
         {/* Second Row: Two Columns with Two Separate Graphs */}
-        <div className="insights-row">
+        <div className="insights-row single-column">
           <div className="insights-column">
             <CategoryPieChart data={expensesCategoryTotals} />
           </div>
-          <div className="insights-column">
-            {/* <ThirdGraphComponent data={expensesMonthlyTotals} /> */}
-          </div>
+          {/* <div className="insights-column">a</div> */}
         </div>
       </div>
     </div>

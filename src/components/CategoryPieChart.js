@@ -63,7 +63,7 @@ function CategoryPieChart({ data }) {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       {/* Title above the chart */}
-      <h3>Total Expenses by Category</h3>
+      <h3>Total Expenses by Category On This Month</h3>
 
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
