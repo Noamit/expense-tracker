@@ -18,6 +18,7 @@ import { get_gd } from "./api";
 import NavBar from "./Navbar";
 import SideBar from "./Sidebar";
 import Profile from "./components/Profile";
+import Insights from "./components/Insights";
 
 function App() {
   const storedAccessToken = localStorage.getItem("access_token");
@@ -127,6 +128,15 @@ function App() {
                   path="/"
                   element={
                     <Home
+                      setAccessToken={setAccessToken}
+                      setRefreshToken={setRefreshToken}
+                    />
+                  }
+                />
+                <Route
+                  path="/insights"
+                  element={
+                    <Insights
                       setAccessToken={setAccessToken}
                       setRefreshToken={setRefreshToken}
                     />

@@ -1,0 +1,23 @@
+.insights-container {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .insights-row.single-column {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column for first row */
+  }
+  
+  .insights-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns for the second row */
+    gap: 20px;
+  }
+  
+  .insights-column {
+    background: #f4f4f4; /* Optional for visibility */
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  

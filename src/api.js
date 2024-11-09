@@ -149,7 +149,7 @@ export async function get_expenses_monthly_totals(
   months
 ) {
   try {
-    const response = await axios.get(BASE_URL + "/expense/monthly_totals", {
+    const response = await axios.get(BASE_URL + "/monthly_totals", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -161,6 +161,27 @@ export async function get_expenses_monthly_totals(
     return [];
   }
 }
+
+export async function get_expenses_category_totals(
+  token,
+  setAccessToken,
+  setRefreshToken,
+  navigate,
+  months
+) {
+  try {
+    const response = await axios.get(BASE_URL + "/category_totals", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    handle_auth_error(setAccessToken, setRefreshToken, navigate, error);
+    return [];
+  }
+}
+
 export async function delete_expenses(
   token,
   setAccessToken,

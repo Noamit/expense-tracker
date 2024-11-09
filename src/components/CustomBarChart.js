@@ -26,7 +26,7 @@ function CustomBarChart({ data }) {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" angle={-30} textAnchor="end" />
+          <XAxis dataKey="month" angle={-10} textAnchor="end" />
 
           <YAxis />
           <Tooltip />

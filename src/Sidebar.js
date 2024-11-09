@@ -9,6 +9,7 @@ import {
   FaGlobe,
   FaBook,
   FaSignOutAlt,
+  FaChartLine,
 } from "react-icons/fa";
 
 import { isAdmin } from "./auth"; // Path to the isAdmin function
@@ -39,6 +40,12 @@ function SideBar({ onLangChange, generalDeclaration, onLogout }) {
         <div style={styles.iconContainer}>
           <FaList style={styles.icon} />
           <span>Categories</span>
+        </div>
+      </Link>
+      <Link to="/insights" style={styles.link}>
+        <div style={styles.iconContainer}>
+          <FaChartLine style={styles.icon} />
+          <span>Insights</span>
         </div>
       </Link>
       {isAdmin(accessToken) && (
