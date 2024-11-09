@@ -14,13 +14,21 @@ import {
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [meaaageError, setMessageError] = useState("");
+
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    setMessageError("");
+    if (username == "" || password == "") {
+      setMessageError("Username and password are requried.");
+      return;
+    }
     try {
       const response = await register(username, password);
       navigate("/");
     } catch (error) {
+      setMessageError("Please Try Agin.");
       console.error(error);
     }
   };
@@ -62,7 +70,9 @@ function Register() {
                 }}
                 size="lg"
               />
-
+              {meaaageError && (
+                <p style={{ color: "red", fontSize: "12px" }}>{meaaageError}</p>
+              )}
               <button
                 className="btn btn-outline-light mx-2 px-5"
                 color="light"

@@ -14,8 +14,14 @@ import {
 function Login({ setAccessToken, setRefreshToken, onLangChange }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [meaaageError, setMessageError] = useState("");
 
   const handleLogin = async () => {
+    setMessageError("");
+    if (username == "" || password == "") {
+      setMessageError("Username and password are requried.");
+      return;
+    }
     try {
       const response = await login(username, password);
       setAccessToken(response.data.access_token);
@@ -24,7 +30,7 @@ function Login({ setAccessToken, setRefreshToken, onLangChange }) {
       localStorage.setItem("refresh_token", response.data.refresh_token);
       onLangChange(response.data.lang_id);
     } catch (error) {
-      console.error(error);
+      setMessageError("Incorrent username or password.");
     }
   };
   return (
@@ -65,7 +71,9 @@ function Login({ setAccessToken, setRefreshToken, onLangChange }) {
                 }}
                 size="lg"
               />
-
+              {meaaageError && (
+                <p style={{ color: "red", fontSize: "12px" }}>{meaaageError}</p>
+              )}
               <button
                 className="btn btn-outline-light mx-2 px-5"
                 color="light"
