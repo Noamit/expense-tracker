@@ -15,6 +15,8 @@ import {
 function CustomBarChart({ data }) {
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
+      {/* Title above the chart */}
+      <h3>Total Expenses by Months</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={data}
