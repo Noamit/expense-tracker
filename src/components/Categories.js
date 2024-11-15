@@ -7,7 +7,7 @@ function Categories({ setAccessToken, setRefreshToken }) {
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
 
-  const [name, setName] = useState(null);
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
 
@@ -29,6 +29,9 @@ function Categories({ setAccessToken, setRefreshToken }) {
   }, []);
 
   const handleHome = async () => {
+    if (name == "") {
+      return;
+    }
     try {
       //todo: check name, amount, date is not empty
       const result = await insert_category(
