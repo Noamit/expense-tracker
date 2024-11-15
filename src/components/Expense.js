@@ -62,6 +62,13 @@ function Expense({ setAccessToken, setRefreshToken }) {
     } catch (error) {}
   };
 
+  const handleFileDelete = (e) => {
+    delete expense.receipt_url;
+    delete updatedExpense.receipt;
+    setExpense({ ...expense });
+    setUpdatedExpense({ ...updatedExpense });
+  };
+
   const handleSubmit = async (e) => {
     try {
       const formData = new FormData();
@@ -212,6 +219,16 @@ function Expense({ setAccessToken, setRefreshToken }) {
                 onChange={handleFileChange}
               />
             </Button>
+            {expense.receipt_url && (
+              <Button
+                id="delete_receipt"
+                variant="contained"
+                component="label"
+                onClick={handleFileDelete}
+              >
+                Delete Receipt
+              </Button>
+            )}
             <Button
               type="submit"
               fullWidth
