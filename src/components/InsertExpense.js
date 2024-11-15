@@ -8,7 +8,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-
+import "../css/Expense.css";
 import { insert_expense } from "../api";
 
 function InsertExpense({ setAccessToken, setRefreshToken }) {
@@ -29,10 +29,18 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const fileURL = URL.createObjectURL(file);
-    setReceipt(file);
-    setReceiptUrl(fileURL);
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const fileURL = URL.createObjectURL(file);
+      setReceipt(file);
+      setReceiptUrl(fileURL);
+      setReceiptUrl(fileURL);
+    }
+  };
+
+  const handleFileDelete = (e) => {
+    setReceipt(null);
+    setReceiptUrl(null);
   };
 
   const handleInsert = async () => {
@@ -166,6 +174,16 @@ function InsertExpense({ setAccessToken, setRefreshToken }) {
                 onChange={handleFileChange}
               />
             </Button>
+            {receiptUrl != null && (
+              <Button
+                id="delete_receipt"
+                variant="contained"
+                component="label"
+                onClick={handleFileDelete}
+              >
+                Delete Receipt
+              </Button>
+            )}
             <Button
               type="submit"
               fullWidth
