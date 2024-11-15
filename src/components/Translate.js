@@ -64,6 +64,7 @@ function Translate({ setAccessToken, setRefreshToken }) {
         id,
         updateData
       );
+      navigate("translates");
     } catch (error) {
       console.error(error);
     }

@@ -83,6 +83,7 @@ function Expense({ setAccessToken, setRefreshToken }) {
         id,
         formData
       );
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

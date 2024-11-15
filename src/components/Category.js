@@ -53,6 +53,7 @@ function Category({ setAccessToken, setRefreshToken }) {
         id,
         updatedCategory
       );
+      navigate("/category");
     } catch (error) {
       console.error(error);
     }
