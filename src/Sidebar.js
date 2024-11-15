@@ -23,29 +23,23 @@ function SideBar({ onLangChange, generalDeclaration, onLogout }) {
   const langs = parsedGD ? parsedGD.langs : {};
   return (
     <div style={styles.sidebar}>
-      <Link to="/profile" style={styles.link}>
-        <div style={styles.iconContainer}>
-          <FaUser style={styles.icon} />
-          <span>Profile</span>
-        </div>
-      </Link>
-
       <Link to="/" style={styles.link}>
         <div style={styles.iconContainer}>
           <FaHome style={styles.icon} />
           <span>Home</span>
         </div>
       </Link>
-      <Link to="/category" style={styles.link}>
-        <div style={styles.iconContainer}>
-          <FaList style={styles.icon} />
-          <span>Categories</span>
-        </div>
-      </Link>
+
       <Link to="/insights" style={styles.link}>
         <div style={styles.iconContainer}>
           <FaChartLine style={styles.icon} />
           <span>Insights</span>
+        </div>
+      </Link>
+      <Link to="/category" style={styles.link}>
+        <div style={styles.iconContainer}>
+          <FaList style={styles.icon} />
+          <span>Categories</span>
         </div>
       </Link>
       {isAdmin(accessToken) && (
@@ -69,6 +63,12 @@ function SideBar({ onLangChange, generalDeclaration, onLogout }) {
         <FaCog style={styles.icon} />
         <span>Settings</span>
       </div> */}
+      <Link to="/profile" style={styles.link}>
+        <div style={styles.iconContainer}>
+          <FaUser style={styles.icon} />
+          <span>Profile</span>
+        </div>
+      </Link>
       <div
         style={styles.iconContainer}
         onClick={() => {
