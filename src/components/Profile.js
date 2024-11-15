@@ -97,7 +97,6 @@ function Profile({ onLangChange, setAccessToken, setRefreshToken }) {
             value={selectedLanguage}
             onChange={handleLanguageChange}
           >
-            <option value="">Select Language</option>
             {Object.entries(langs).map(([langId, langName]) => (
               <option key={langId} value={langId}>
                 {langName}
