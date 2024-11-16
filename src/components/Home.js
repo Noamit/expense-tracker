@@ -136,6 +136,7 @@ function Home({ setAccessToken, setRefreshToken }) {
                 <th>
                   {parsedTranslations ? parsedTranslations.amount : "Amount"}
                 </th>
+                <th>{parsedTranslations ? parsedTranslations.date : "Date"}</th>
                 <th>
                   {parsedTranslations ? parsedTranslations.action : "Action"}
                 </th>
