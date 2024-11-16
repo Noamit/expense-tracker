@@ -46,9 +46,6 @@ button {
 	background-color: #6d707a; 
 }
 
-#create-expense {
-	background-color: #05090a; 
-}
 
 
 button:hover { 
@@ -88,3 +85,11 @@ tbody td {
 	text-align: right; 
 	background-color: #f2f2f2; 
 }
+
+#export-expenses {
+	background-color: #e7be96; 
+}
+#create-expense {
+	background-color: #05090a; 
+}
+

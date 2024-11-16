@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, MenuItem } from "@mui/material";
 import { get_expenses, delete_expenses, get_categories } from "../api";
 import "../css/home.css";
 import ExpenseFilter from "./ExpenseFilter";
@@ -18,6 +17,7 @@ function Home({ setAccessToken, setRefreshToken }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({});
   const [categories, setCategories] = useState([]);
+  const [csvURL, setCsvURL] = useState("");
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -54,6 +54,52 @@ function Home({ setAccessToken, setRefreshToken }) {
       setTotalPages(value.total_pages);
     });
   }, [currentPage]);
+
+  // const csv_export = async () => {
+  //   try {
+  //     filters.export = 1;
+  //     get_expenses(
+  //       accessToken,
+  //       setAccessToken,
+  //       setRefreshToken,
+  //       navigate,
+  //       filters
+  //     ).then((value) => {
+  //       setCsvURL(value.export_url);
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const csv_export = async () => {
+    try {
+      // Add export filter
+      filters.export = 1;
+
+      // Fetch the export URL
+      const value = await get_expenses(
+        accessToken,
+        setAccessToken,
+        setRefreshToken,
+        navigate,
+        filters
+      );
+
+      // Extract the CSV URL
+      const exportURL = value.export_url;
+
+      // Create a temporary <a> element and trigger the download
+      const link = document.createElement("a");
+      link.href = exportURL;
+      link.download = "expenses.csv"; // Optional: You can customize the filename
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // Clean up
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handle_delete = async (id) => {
     try {
@@ -112,6 +158,9 @@ function Home({ setAccessToken, setRefreshToken }) {
             {parsedTranslations
               ? parsedTranslations.add_expense_button
               : "Add Expense"}
+          </button>
+          <button id="export-expenses" type="button" onClick={csv_export}>
+            CSV Export
           </button>
         </div>
         <div className="expense-table">
