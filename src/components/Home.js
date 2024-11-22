@@ -55,23 +55,6 @@ function Home({ setAccessToken, setRefreshToken }) {
     });
   }, [currentPage]);
 
-  // const csv_export = async () => {
-  //   try {
-  //     filters.export = 1;
-  //     get_expenses(
-  //       accessToken,
-  //       setAccessToken,
-  //       setRefreshToken,
-  //       navigate,
-  //       filters
-  //     ).then((value) => {
-  //       setCsvURL(value.export_url);
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const csv_export = async () => {
     try {
       // Add export filter
